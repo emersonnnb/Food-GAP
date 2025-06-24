@@ -1,0 +1,83 @@
+<div class="container">
+    <h2>Carrinho</h2>
+
+    <div *ngIf="itens.length === 0">
+        <p>O carrinho está vazio.</p>
+    </div>
+
+    <div *ngFor="let item of itens; let i = index" class="card-item">
+        <div class="info">
+            <h3>{{ item.produto.nome }}</h3>
+            <p>{{ item.produto.descricao }}</p>
+            <p>Observação: {{ item.observacao || 'Nenhuma' }}</p>
+
+            <div *ngIf="item.adicionais.length > 0">
+                <strong>Adicionais:</strong>
+                <ul>
+                    <li *ngFor="let adicional of item.adicionais">
+                        {{ adicional.nome }} (x{{ adicional.quantidade }}) -
+                        <ng-container *ngIf="adicional.preco > 0">
+                            R$ {{ adicional.preco * adicional.quantidade | number: '1.2-2' }}
+                        </ng-container>
+                        <ng-container *ngIf="adicional.preco === 0">
+                            Grátis
+                        </ng-container>
+                    </li>
+                </ul>
+            </div>
+
+            <h4>Total deste item: R$ {{ item.total | number: '1.2-2' }}</h4>
+        </div>
+
+        <button (click)="removerItem(i)">Remover</button>
+    </div>
+
+    <!-- 🧾 Formulário de Dados -->
+    <form [formGroup]="form" *ngIf="itens.length > 0" class="form-section">
+        <h3>Dados do Cliente</h3>
+        <label>Nome*</label>
+        <input type="text" formControlName="nome" />
+        <div class="error" *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched">
+            Campo obrigatório
+        </div>
+
+        <label>Telefone*</label>
+        <input type="text" formControlName="telefone" placeholder="(xx) xxxxx-xxxx" />
+        <div class="error" *ngIf="form.get('telefone')?.invalid && form.get('telefone')?.touched">
+            Campo obrigatório
+        </div>
+
+        <h3>Endereço de Entrega</h3>
+        <label>Endereço completo*</label>
+        <input type="text" formControlName="endereco" />
+        <div class="error" *ngIf="form.get('endereco')?.invalid && form.get('endereco')?.touched">
+            Campo obrigatório
+        </div>
+
+        <label>Observações da entrega</label>
+        <textarea formControlName="observacaoEntrega" rows="2"></textarea>
+
+        <h3>Forma de Pagamento</h3>
+        <select formControlName="formaPagamento">
+            <option value="">Selecione</option>
+            <option *ngFor="let pagamento of formasPagamento" [value]="pagamento">
+                {{ pagamento }}
+            </option>
+        </select>
+        <div class="error" *ngIf="form.get('formaPagamento')?.invalid && form.get('formaPagamento')?.touched">
+            Campo obrigatório
+        </div>
+
+        <div *ngIf="form.value.formaPagamento === 'Dinheiro'">
+            <label>Troco para quanto?</label>
+            <input type="text" formControlName="trocoPara" placeholder="Ex.: 100.00" />
+        </div>
+    </form>
+
+    <!-- 🔥 Footer -->
+    <div *ngIf="itens.length > 0" class="footer">
+        <h3>Total Carrinho: R$ {{ totalCarrinho | number: '1.2-2' }}</h3>
+        <button class="btn-limpar" (click)="limparCarrinho()">Limpar Carrinho</button>
+        <button class="btn-finalizar" (click)="finalizarPedido()">Finalizar Pedido</button>
+    </div>
+</div>

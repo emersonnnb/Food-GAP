@@ -1,0 +1,77 @@
+<div class="container" *ngIf="produto">
+
+    <!-- Imagem no topo -->
+    <div class="product-image">
+        <img [src]="produto.imagem" alt="{{ produto.nome }}" />
+    </div>
+
+    <!-- Dados do produto -->
+    <div class="product-info">
+        <h2>{{ produto.nome }}</h2>
+        <p>{{ produto.descricao }}</p>
+        <h3>R$ {{ produto.preco | number: '1.2-2' }}</h3>
+    </div>
+
+    <!-- Adicionais Açai -->
+    <div class="accordion">
+        <div class="accordion-header" (click)="acaiAberto = !acaiAberto">
+            <h4>Turbine seu açaí</h4>
+            <span>{{ acaiAberto ? '-' : '+' }}</span>
+        </div>
+        <div class="accordion-body" *ngIf="acaiAberto">
+            <div class="item" *ngFor="let adicional of adicionaisAcai">
+                <div class="item-info">
+                    <span>{{ adicional.nome }}</span>
+                    <small>R$ {{ adicional.preco }}</small>
+                </div>
+                <div class="item-actions">
+                    <button (click)="remover(adicional)">-</button>
+                    <span>{{ adicional.quantidade }}</span>
+                    <button (click)="adicionar(adicional)">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adicionais Lanche -->
+    <div class="accordion">
+        <div class="accordion-header" (click)="lancheAberto = !lancheAberto">
+            <h4>Turbine seu lanche</h4>
+            <span>{{ lancheAberto ? '-' : '+' }}</span>
+        </div>
+        <div class="accordion-body" *ngIf="lancheAberto">
+            <div class="item" *ngFor="let adicional of adicionaisLanche">
+                <div class="item-info">
+                    <span>{{ adicional.nome }}</span>
+                    <small>
+                        <ng-container *ngIf="adicional.preco > 0">
+                            R$ {{ adicional.preco }}
+                        </ng-container>
+                        <ng-container *ngIf="adicional.preco === 0">
+                            Grátis
+                        </ng-container>
+                    </small>
+                </div>
+                <div class="item-actions">
+                    <button (click)="remover(adicional)">-</button>
+                    <span>{{ adicional.quantidade }}</span>
+                    <button (click)="adicionar(adicional)">+</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Observação -->
+    <div class="observacao">
+        <label>Observações</label>
+        <textarea [(ngModel)]="observacao" placeholder="Ex: Retirar cebola, ponto da carne..."></textarea>
+    </div>
+
+    <!-- Botão fixo -->
+    <div class="bottom-bar">
+        <button (click)="finalizar()">
+            Avançar - R$ {{ total | number: '1.2-2' }}
+        </button>
+    </div>
+
+</div>
