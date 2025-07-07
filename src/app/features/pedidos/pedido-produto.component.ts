@@ -22,10 +22,10 @@ export class PedidoProdutoComponent {
   batatasRecheadas = [
     { nome: 'Camarão', preco: 27.00 },
     { nome: 'Bacon e Calabresa', preco: 23.00 },
-    { nome: 'Strogonoff de Carne', preco: 24.00 },
-    { nome: 'Strogonoff de Frango', preco: 22.00 },
-    { nome: 'Carne Seca', preco: 24.00 },
-    { nome: 'Costela', preco: 23.00 }
+    { nome: 'Strogonoff de Carne c/ Batata Palha', preco: 24.00 },
+    { nome: 'Strogonoff de Frango c/ Batata Palha', preco: 22.00 },
+    { nome: 'Carne Seca c/ Molho', preco: 24.00 },
+    { nome: 'Costela c/ Molho', preco: 23.00 }
   ];
 
   cuscuzNordestinos = [
