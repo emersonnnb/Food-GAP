@@ -1,77 +1,156 @@
 <div class="container" *ngIf="produto">
 
-    <!-- Imagem no topo -->
-    <div class="product-image">
-        <img [src]="produto.imagem" alt="{{ produto.nome }}" />
-    </div>
+  <!-- Imagem do produto base -->
+  <div class="product-image">
+    <img [src]="produto.imagem" alt="{{ produto.nome }}" />
+  </div>
 
-    <!-- Dados do produto -->
-    <div class="product-info">
-        <h2>{{ produto.nome }}</h2>
-        <p>{{ produto.descricao }}</p>
-        <h3>R$ {{ produto.preco | number: '1.2-2' }}</h3>
-    </div>
+  <!-- Nome base do produto -->
+  <div class="product-info">
+    <h2>{{ produto.nome }}</h2>
+    <p>{{ produto.descricao }}</p>
+  </div>
 
-    <!-- Adicionais Açai -->
+  <!-- Seleção do Produto Principal -->
+  <ng-container *ngIf="['batataRecheada', 'cuscuzNordestino', 'caldosESopas'].includes(produto?.categoria)">
     <div class="accordion">
-        <div class="accordion-header" (click)="acaiAberto = !acaiAberto">
-            <h4>Turbine seu açaí</h4>
-            <span>{{ acaiAberto ? '-' : '+' }}</span>
-        </div>
-        <div class="accordion-body" *ngIf="acaiAberto">
-            <div class="item" *ngFor="let adicional of adicionaisAcai">
-                <div class="item-info">
-                    <span>{{ adicional.nome }}</span>
-                    <small>R$ {{ adicional.preco }}</small>
-                </div>
-                <div class="item-actions">
-                    <button (click)="remover(adicional)">-</button>
-                    <span>{{ adicional.quantidade }}</span>
-                    <button (click)="adicionar(adicional)">+</button>
-                </div>
-            </div>
-        </div>
-    </div>
+      <div class="accordion-header" (click)="acaiAberto = !acaiAberto">
+        <h4>
+          {{
+            produto?.categoria === 'cuscuzNordestino'
+              ? 'Escolha seu Cuscuz Nordestino'
+              : produto?.categoria === 'caldosESopas'
+                ? 'Escolha seu Caldo'
+                : 'Escolha sua Batata Recheada'
+          }}
+        </h4>
+        <span>{{ acaiAberto ? '-' : '+' }}</span>
+      </div>
 
-    <!-- Adicionais Lanche -->
+      <div class="accordion-body" *ngIf="acaiAberto">
+
+        <!-- Batatas -->
+        <ng-container *ngIf="produto?.categoria === 'batataRecheada'">
+          <div class="item" *ngFor="let b of batatasRecheadas">
+            <div class="item-info">
+              <span>{{ b.nome }}</span>
+              <small>R$ {{ b.preco | number: '1.2-2' }}</small>
+            </div>
+            <div class="item-actions">
+              <input type="radio" name="batataRecheada" [value]="b" [(ngModel)]="batataSelecionada" class="radio-grande" />
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Cuscuz -->
+        <ng-container *ngIf="produto?.categoria === 'cuscuzNordestino'">
+          <div class="item" *ngFor="let c of cuscuzNordestinos">
+            <div class="item-info">
+              <span>{{ c.nome }}</span>
+              <small>R$ {{ c.preco | number: '1.2-2' }}</small>
+            </div>
+            <div class="item-actions">
+              <input type="radio" name="cuscuz" [value]="c" [(ngModel)]="cuscuzSelecionado" class="radio-grande" />
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Caldos -->
+        <ng-container *ngIf="produto?.categoria === 'caldosESopas'">
+          <div class="item" *ngFor="let caldo of caldosESopas">
+            <div class="item-info">
+              <span>{{ caldo.nome }}</span>
+              <small>R$ {{ caldo.preco | number: '1.2-2' }}</small>
+            </div>
+            <div class="item-actions">
+              <input type="radio" name="caldo" [value]="caldo" [(ngModel)]="caldoSelecionado" class="radio-grande" />
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Adicionais -->
+  <ng-container *ngIf="['batataRecheada', 'cuscuzNordestino'].includes(produto?.categoria)">
     <div class="accordion">
-        <div class="accordion-header" (click)="lancheAberto = !lancheAberto">
-            <h4>Turbine seu lanche</h4>
-            <span>{{ lancheAberto ? '-' : '+' }}</span>
-        </div>
-        <div class="accordion-body" *ngIf="lancheAberto">
-            <div class="item" *ngFor="let adicional of adicionaisLanche">
-                <div class="item-info">
-                    <span>{{ adicional.nome }}</span>
-                    <small>
-                        <ng-container *ngIf="adicional.preco > 0">
-                            R$ {{ adicional.preco }}
-                        </ng-container>
-                        <ng-container *ngIf="adicional.preco === 0">
-                            Grátis
-                        </ng-container>
-                    </small>
-                </div>
-                <div class="item-actions">
-                    <button (click)="remover(adicional)">-</button>
-                    <span>{{ adicional.quantidade }}</span>
-                    <button (click)="adicionar(adicional)">+</button>
-                </div>
+      <div class="accordion-header" (click)="lancheAberto = !lancheAberto">
+        <h4>Adicionais</h4>
+        <span>{{ lancheAberto ? '-' : '+' }}</span>
+      </div>
+
+      <div class="accordion-body" *ngIf="lancheAberto">
+
+        <!-- Batata -->
+        <ng-container *ngIf="produto?.categoria === 'batataRecheada'">
+          <div class="item" *ngFor="let adicional of adicionaisBatata">
+            <div class="item-info">
+              <span>{{ adicional.nome }}</span>
+              <small *ngIf="adicional.preco > 0">R$ {{ adicional.preco | number: '1.2-2' }}</small>
+              <small *ngIf="adicional.preco === 0">Grátis</small>
             </div>
+            <div class="item-actions">
+              <button (click)="remover(adicional)">-</button>
+              <span>{{ adicional.quantidade }}</span>
+              <button (click)="adicionar(adicional)">+</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Cuscuz -->
+        <ng-container *ngIf="produto?.categoria === 'cuscuzNordestino'">
+          <div class="item" *ngFor="let adicional of adicionaisCuscuz">
+            <div class="item-info">
+              <span>{{ adicional.nome }}</span>
+              <small *ngIf="adicional.preco > 0">R$ {{ adicional.preco | number: '1.2-2' }}</small>
+              <small *ngIf="adicional.preco === 0">Grátis</small>
+            </div>
+            <div class="item-actions">
+              <button (click)="remover(adicional)">-</button>
+              <span>{{ adicional.quantidade }}</span>
+              <button (click)="adicionar(adicional)">+</button>
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Bebidas -->
+  <div class="accordion">
+    <div class="accordion-header" (click)="bebidaAberto = !bebidaAberto">
+      <h4>Bebidas</h4>
+      <span>{{ bebidaAberto ? '-' : '+' }}</span>
+    </div>
+    <div class="accordion-body" *ngIf="bebidaAberto">
+      <div class="item" *ngFor="let bebida of bebidas">
+        <div class="item-info">
+          <span>{{ bebida.nome }}</span>
+          <small>R$ {{ bebida.preco | number: '1.2-2' }}</small>
         </div>
+        <div class="item-actions">
+          <button (click)="remover(bebida)">-</button>
+          <span>{{ bebida.quantidade }}</span>
+          <button (click)="adicionar(bebida)">+</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Observação -->
-    <div class="observacao">
-        <label>Observações</label>
-        <textarea [(ngModel)]="observacao" placeholder="Ex: Retirar cebola, ponto da carne..."></textarea>
-    </div>
+  <!-- Observações -->
+  <div class="observacao">
+    <label>Observações</label>
+    <textarea [(ngModel)]="observacao" placeholder="Ex: sem molho, sem cebola..."></textarea>
+  </div>
 
-    <!-- Botão fixo -->
-    <div class="bottom-bar">
-        <button (click)="finalizar()">
-            Avançar - R$ {{ total | number: '1.2-2' }}
-        </button>
-    </div>
+  <!-- Botão fixo -->
+  <div class="bottom-bar">
+    <button [routerLink]="['/lista-produtos']">Voltar</button>
+    <button (click)="finalizar()">
+      Avançar - R$ {{ total | number: '1.2-2' }}
+    </button>
+  </div>
 
 </div>

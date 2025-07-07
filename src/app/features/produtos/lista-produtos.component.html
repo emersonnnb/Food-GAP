@@ -1,11 +1,14 @@
+  <div class="extender logo-container">
+    <img src="assets/images/logo.png" alt="Logo" class="logo" />
+  </div>
 <div class="top-bar">
-    <h2>Produtos</h2>
-    <div class="cart-icon" (click)="irParaCarrinho()">
-        <span class="material-icons">shopping_cart</span>
-        <div class="badge" *ngIf="totalItensCarrinho > 0">
-            {{ totalItensCarrinho }}
-        </div>
-    </div>
+  <h2>Selecione</h2>
+  <div class="cart-icon" (click)="irParaCarrinho()">
+      <span class="material-icons">shopping_cart</span>
+      <div class="badge" *ngIf="totalItensCarrinho > 0">
+          {{ totalItensCarrinho }}
+      </div>
+  </div>
 </div>
 
 <div class="container">
@@ -15,8 +18,13 @@
         </div>
         <div class="info">
             <h2>{{ produto.nome }}</h2>
-            <p>{{ produto.descricao }}</p>
-            <h3>R$ {{ produto.preco | number: '1.2-2' }}</h3>
+            <p>
+            {{ produto.descricao.length > 80
+                ? (produto.descricao | slice:0:80) + '...'
+                : produto.descricao
+            }}
+          </p>
+            <h3>a partir de R$ {{ produto.preco | number: '1.2-2' }}</h3>
         </div>
     </div>
 </div>

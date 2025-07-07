@@ -107,3 +107,27 @@
     }
   }
 }
+
+
+.extender {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+.logo-container {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  background-color: white;
+
+  img.logo {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    height: auto;
+  }
+}
+
+
+
+
