@@ -122,14 +122,14 @@ export class PedidoProdutoComponent {
       return;
     }
 
-    if (
-      this.produto?.categoria !== 'cuscuzNordestino' &&
-      this.produto?.categoria !== 'caldosESopas' &&
-      !this.batataSelecionada
-    ) {
-      alert('Selecione o tipo de Batata Recheada.');
-      return;
-    }
+    // if (
+    //   this.produto?.categoria !== 'cuscuzNordestino' &&
+    //   this.produto?.categoria !== 'caldosESopas' &&
+    //   !this.batataSelecionada
+    // ) {
+    //   alert('Selecione o tipo de Batata Recheada.');
+    //   return;
+    // }
 
     const principal =
       this.produto?.categoria === 'cuscuzNordestino' ? this.cuscuzSelecionado :

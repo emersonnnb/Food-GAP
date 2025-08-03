@@ -1,0 +1,7 @@
+Ajustes Food
+
+- Verificar a questão da bebida em dois locais (Adicional e produto).
+- Tela de entrega.
+- Padronizar os botões.
+- Voltar, sempre para etapa anterior.
+- Remover e adicionar itens no carrinho com as mesmas escolhas.

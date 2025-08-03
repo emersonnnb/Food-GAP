@@ -1,2 +1,63 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
 @import "bootstrap/dist/css/bootstrap.min.css";
+
+
+header {
+    .logo {
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        background-color: white;
+      
+        img.logo {
+          display: block;
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto;
+          height: auto;
+        }        
+    }
+    .top-bar {
+      max-width: 600px;
+      margin: auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid #eee;
+    
+      h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #333;
+      }
+    
+      .cart-icon {
+        position: relative;
+        cursor: pointer;
+    
+        .material-icons {
+          font-size: 30px;
+          color: #333;
+        }
+    
+        .badge {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          background-color: #e74c3c;
+          color: white;
+          border-radius: 50%;
+          width: 18px;
+          height: 18px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 11px;
+        }
+      }
+    }
+}

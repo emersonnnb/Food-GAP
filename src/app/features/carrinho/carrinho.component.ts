@@ -2,11 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CarrinhoService } from '../services/carrinho.service';
+import { Router } from '@angular/router';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-carrinho',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatTooltipModule],
   templateUrl: './carrinho.component.html',
   styleUrl: './carrinho.component.scss',
 })
@@ -17,7 +19,11 @@ export class CarrinhoComponent {
 
   formasPagamento = ['Pix', 'Dinheiro', 'Cartão de Crédito', 'Cartão de Débito'];
 
-  constructor(private carrinho: CarrinhoService, private fb: FormBuilder) {}
+  constructor(
+    private carrinho: CarrinhoService, 
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -35,13 +41,18 @@ export class CarrinhoComponent {
   }
 
   removerItem(index: number) {
+    debugger;
     this.itens.splice(index, 1);
-    this.carrinho.atualizarItens(this.itens);
+    this.carrinho.atualizarItens(this.itens);    
+    if (this.itens.length == 1) {
+      this.router.navigate(['/lista-produtos']);
+    }
   }
 
   limparCarrinho() {
     this.carrinho.limparCarrinho();
     this.itens = [];
+    this.router.navigate(['/lista-produtos']);
   }
 
   finalizarPedido() {
@@ -114,5 +125,9 @@ export class CarrinhoComponent {
     mensagem += `Obrigado pelo seu pedido! 😉`;
 
     return mensagem;
+  }
+
+  onBack() {    
+    this.router.navigate(['/lista-produtos']);
   }
 }
