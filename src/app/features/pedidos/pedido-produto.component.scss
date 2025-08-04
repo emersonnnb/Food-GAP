@@ -6,32 +6,35 @@
   flex-direction: column;
   min-height: 100vh;
   position: relative;
-}
 
-.product-image img {
-  width: 100%;
-  display: block;
-  object-fit: cover;
-  max-height: 250px;
-}
-
-.product-info {
-  padding: 1rem;
-
-  h2 {
-    margin: 0;
+  .category-image img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    max-height: 250px;
   }
 
-  p {
-    color: #666;
-    margin: 0.5rem 0;
+  .category-info {
+    padding: 1rem;
+  
+    h2 {
+      margin: 0;
+    }
+  
+    p {
+      color: #666;
+      margin: 0.5rem 0;
+    }
+  
+    h3 {
+      color: #27ae60;
+      margin: 0.5rem 0;
+    }
   }
-
-  h3 {
-    color: #27ae60;
-    margin: 0.5rem 0;
-  }
+  
 }
+
+
 
 .accordion {
   border-top: 1px solid #eee;

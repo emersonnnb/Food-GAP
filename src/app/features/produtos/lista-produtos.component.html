@@ -3,39 +3,30 @@
     <img src="assets/images/logo.png" alt="Logo" class="logo" />
   </div>
   <div class="top-bar">
-    <h2>Selecione</h2>
-    <div
-      *ngIf="totalItensCarrinho > 0"
-      class="cart-icon"
-      (click)="irParaCarrinho()"
-    >
-      <span class="material-icons">shopping_cart</span>
-      <div class="badge">
-        {{ totalItensCarrinho }}
-      </div>
-    </div>
+    <h2>Selecione uma Categoria</h2>
   </div>
 </header>
 
 <div class="container">
   <div
     class="card-produto"
-    *ngFor="let produto of produtos"
-    (click)="selecionarProduto(produto)"
+    *ngFor="let categoria of categorias"
+    (click)="selecionarCategoria(categoria.id)"    
   >
     <div class="imagem">
-      <img [src]="produto.imagem" alt="{{ produto.nome }}" />
+      <img [src]="categoria.imagem" alt="{{ categoria.nome }}" />
     </div>
     <div class="info">
-      <h2>{{ produto.nome }}</h2>
+      <h2>{{ categoria.nome }}</h2>
       <p>
         {{
-          produto.descricao.length > 80
-            ? (produto.descricao | slice : 0 : 80) + "..."
-            : produto.descricao
+          categoria.descricao.length > 80
+            ? (categoria.descricao | slice : 0 : 80) + "..."
+            : categoria.descricao
         }}
       </p>
-      <h3>a partir de R$ {{ produto.preco | number : "1.2-2" }}</h3>
+      <h3>a partir de R$ {{ categoria.preco | number : "1.2-2" }}</h3>
     </div>
   </div>
 </div>
+
